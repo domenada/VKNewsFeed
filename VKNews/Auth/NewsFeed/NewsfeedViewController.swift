@@ -44,7 +44,7 @@ class NewsfeedViewController: UIViewController, NewsfeedDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        DispatchQueue.global(qos: .default).async  {
+        DispatchQueue.global(qos: .background).async  {
             self.table.register(UINib(nibName: "NewsfeedCell", bundle: nil), forCellReuseIdentifier: NewsfeedCell.reuseId)
             self.interactor?.makeRequest(request: Newsfeed.Model.Request.RequestType.getNewsfeed)
         }
