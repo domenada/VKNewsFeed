@@ -19,8 +19,8 @@ class NewsfeedViewController: UIViewController, NewsfeedDisplayLogic {
     
     private var feedViewModel = FeedViewModel.init(cells: [])
     
-    @IBOutlet weak var table: UITableView!
     
+    @IBOutlet weak var table: UITableView!
     // MARK: Setup
     
     private func setup() {
@@ -44,12 +44,15 @@ class NewsfeedViewController: UIViewController, NewsfeedDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        DispatchQueue.global(qos: .background).async  {
-            self.table.register(UINib(nibName: "NewsfeedCell", bundle: nil), forCellReuseIdentifier: NewsfeedCell.reuseId)
-            self.interactor?.makeRequest(request: Newsfeed.Model.Request.RequestType.getNewsfeed)
-        }
+        
+        table.register(UINib(nibName: "NewsfeedCell", bundle: nil), forCellReuseIdentifier: NewsfeedCell.reuseId)
+        
+        table.separatorStyle = .none
+        table.backgroundColor = .clear
+        view.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+        
+        interactor?.makeRequest(request: Newsfeed.Model.Request.RequestType.getNewsfeed)
     }
-    
     
     func displayData(viewModel: Newsfeed.Model.ViewModel.ViewModelData) {
         
@@ -76,8 +79,11 @@ extension NewsfeedViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 212
+        let cellViewModel = feedViewModel.cells[indexPath.row]
+        return cellViewModel.sizes.totalHeight
+       
     }
+    
     
     
     
