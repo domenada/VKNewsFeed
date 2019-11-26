@@ -50,4 +50,3 @@ struct FeedViewModel {
     }
     let cells: [Cell]
 }
-
